@@ -2,6 +2,7 @@ package AVAL_SamBrum_GabPinheiro.dtos;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import AVAL_SamBrum_GabPinheiro.entities.Ator;
 import AVAL_SamBrum_GabPinheiro.entities.Pessoa;
 
 @JsonPropertyOrder({"id", "nome", "cpf", "ator"})
@@ -14,12 +15,16 @@ public class PessoaResponseDTO {
 
     public PessoaResponseDTO() {
     }
-
+    
     public PessoaResponseDTO(Pessoa entity) {
         this.id = entity.getId();
         this.nome = entity.getNome();
         this.cpf = entity.getCpf();
         this.ator = entity.getAtor();
+    }
+
+    public Ator getAtor() {
+        return ator;
     }
 
     public String getCpf() {
@@ -46,4 +51,7 @@ public class PessoaResponseDTO {
         this.nome = nome;
     }
 
+    public void setAtor(Ator ator) {
+        this.ator = ator;
+    }
 }
