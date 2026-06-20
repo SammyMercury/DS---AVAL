@@ -4,11 +4,14 @@ import AVAL_SamBrum_GabPinheiro.entities.Ator;
 import jakarta.validation.constraints.NotNull;
 
 public class PessoaRequestDTO {
-     
+    
+    @NotNull(message = "O campo 'nome' é obrigatório.")
     private String nome;
 
+    @NotNull(message = "O campo 'email' é obrigatório.")
     private String email;
 
+    @NotNull(message = "O campo 'cpf' é obrigatório.")
     private String cpf;
 
     @NotNull(message = "O campo 'senha' é obrigatório.")

@@ -2,6 +2,8 @@ package AVAL_SamBrum_GabPinheiro.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,7 @@ public class Avaliacao {
     @Column(nullable = false)
     private Double nota;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Estado estado;
 
