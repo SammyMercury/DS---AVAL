@@ -1,17 +1,18 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
 import java.util.Date;
 
-import AVAL_SamBrum_GabPinheiro.entities.Genero;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Genero;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class JogoRequestDTO {
     
-    @NotNull(message = "O campo 'nm_jogo' é obrigatório.")
-    private String nm_jogo;
+    @NotBlank(message = "O campo 'nm_jogo' é obrigatório.")
+    private String nmJogo;
     
     @NotNull(message = "O campo 'dt_lancamento' é obrigatório.")
-    private Date dt_lancamento;
+    private Date dtLancamento;
     
     @NotNull(message = "O campo 'notaGeral' é obrigatório.")
     private Double notaGeral;
@@ -29,16 +30,16 @@ public class JogoRequestDTO {
         return devId;
     }
 
-    public Date getDt_lancamento() {
-        return dt_lancamento;
+    public Date getDtLancamento() {
+        return dtLancamento;
     }
 
     public Genero getGenero() {
         return genero;
     }
 
-    public String getNm_jogo() {
-        return nm_jogo;
+    public String getNmJogo() {
+        return nmJogo;
     }
 
     public Double getNotaGeral() {
@@ -50,16 +51,16 @@ public class JogoRequestDTO {
     }
 
     
-    public void setDt_lancamento(Date dt_lancamento) {
-        this.dt_lancamento = dt_lancamento;
+    public void setDtLancamento(Date dtLancamento) {
+        this.dtLancamento = dtLancamento;
     }
 
     public void setGenero(Genero genero) {
         this.genero = genero;
     }
 
-    public void setNm_jogo(String nm_jogo) {
-        this.nm_jogo = nm_jogo;
+    public void setNmJogo(String nmJogo) {
+        this.nmJogo = nmJogo;
     }
 
     public void setNotaGeral(Double notaGeral) {

@@ -1,19 +1,24 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import AVAL_SamBrum_GabPinheiro.entities.Avaliacao;
-import AVAL_SamBrum_GabPinheiro.entities.Estado;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Estado;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Avaliacao;
+
+
+
 
 @JsonPropertyOrder({"id", "userId", "estado", "nota"})
 public class AvaliacaoResponseDTO {
+    
+
     private Long id;
     private Long userId;
     private Estado estado;
     private Double nota;
 
     public AvaliacaoResponseDTO(){}
-
+    
     public AvaliacaoResponseDTO(Avaliacao entity){
         this.id = entity.getId();
         this.userId = entity.getUser().getId();

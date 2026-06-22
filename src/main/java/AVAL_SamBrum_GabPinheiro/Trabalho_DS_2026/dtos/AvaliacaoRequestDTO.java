@@ -1,16 +1,15 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
-import AVAL_SamBrum_GabPinheiro.entities.Estado;
-import jakarta.validation.constraints.NotBlank;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Estado;
+import jakarta.validation.constraints.NotNull;
 
 public class AvaliacaoRequestDTO {
 
-    @NotBlank(message = "O campo 'userId' é obrigatório")
+    @NotNull(message = "O campo 'userId' é obrigatório")
     private Long userId;
-
     private Estado estado;
-
-    @NotBlank(message = "O campo 'nota' é obrigatório")
+    
+    @NotNull(message = "O campo 'nota' é obrigatório")
     private Double nota;
 
     public AvaliacaoRequestDTO(){}

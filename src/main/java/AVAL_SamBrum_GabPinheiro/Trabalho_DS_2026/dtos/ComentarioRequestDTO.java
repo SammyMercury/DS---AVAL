@@ -1,10 +1,11 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class ComentarioRequestDTO {
 
-    @NotNull(message = "O campo 'texto' é obrigatório")
+    @NotBlank(message = "O campo 'texto' é obrigatório")
     private String texto;
 
     @NotNull(message = "O campo 'userId' é obrigatório")

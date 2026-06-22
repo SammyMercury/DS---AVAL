@@ -1,20 +1,20 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
-import AVAL_SamBrum_GabPinheiro.entities.Ator;
-import jakarta.validation.constraints.NotNull;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Ator;
+import jakarta.validation.constraints.NotBlank;
 
 public class PessoaRequestDTO {
     
-    @NotNull(message = "O campo 'nome' é obrigatório.")
+    @NotBlank(message = "O campo 'nome' é obrigatório.")
     private String nome;
 
-    @NotNull(message = "O campo 'email' é obrigatório.")
+    @NotBlank(message = "O campo 'email' é obrigatório.")
     private String email;
 
-    @NotNull(message = "O campo 'cpf' é obrigatório.")
+    @NotBlank(message = "O campo 'cpf' é obrigatório.")
     private String cpf;
 
-    @NotNull(message = "O campo 'senha' é obrigatório.")
+    @NotBlank(message = "O campo 'senha' é obrigatório.")
     private String senha;
 
     private Ator ator;

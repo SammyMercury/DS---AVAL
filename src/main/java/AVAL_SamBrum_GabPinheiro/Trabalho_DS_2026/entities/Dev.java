@@ -1,4 +1,4 @@
-package AVAL_SamBrum_GabPinheiro.entities;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

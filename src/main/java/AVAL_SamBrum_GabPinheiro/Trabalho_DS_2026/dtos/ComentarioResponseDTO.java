@@ -1,8 +1,8 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import AVAL_SamBrum_GabPinheiro.entities.Comentario;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Comentario;
 
 @JsonPropertyOrder({"id", "userId", "texto", "avaliacaoId"})
 public class ComentarioResponseDTO {

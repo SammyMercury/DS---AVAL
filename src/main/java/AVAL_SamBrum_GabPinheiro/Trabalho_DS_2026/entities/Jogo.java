@@ -1,4 +1,4 @@
-package AVAL_SamBrum_GabPinheiro.entities;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities;
 
 import java.util.Date;
 
@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -34,7 +35,7 @@ public class Jogo {
     private Genero genero;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Dev dev;
 
 

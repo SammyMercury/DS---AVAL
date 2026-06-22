@@ -1,8 +1,8 @@
-package AVAL_SamBrum_GabPinheiro.dtos;
+package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import AVAL_SamBrum_GabPinheiro.entities.Jogo;
+import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Jogo;
 
 @JsonPropertyOrder({"id", "nome", "devId"})
 public class JogoResponseDTO {
