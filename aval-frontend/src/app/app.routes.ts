@@ -19,7 +19,6 @@ export const routes: Routes = [
   {
     path: '',
     component: Principal,
-    canActivate: [authGuard],
     children: [
       { 
         path: 'generos', 
