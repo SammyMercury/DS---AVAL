@@ -32,9 +32,9 @@ export class ComentarioForm implements OnInit {
         private activatedRoute: ActivatedRoute
     ) {
         this.formComentario = this.fb.group({
-            comentario: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
-            idAvaliacao: ['', Validators.required],
-            idPessoa: ['', Validators.required]
+            texto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
+            avaliacaoId: ['', Validators.required],
+            userId: ['', Validators.required]
         });
     }
 
@@ -48,9 +48,9 @@ export class ComentarioForm implements OnInit {
             this.comentarioService.buscarPorId(this.id).subscribe({
                 next: (comentario: Comentario) => {
                     this.formComentario.patchValue({
-                        comentario: comentario.comentario,
-                        idAvaliacao: comentario.idAvaliacao,
-                        idPessoa: comentario.idPessoa
+                        texto: comentario.texto,
+                        avaliacaoId: comentario.avaliacaoId,
+                        userId: comentario.userId
                     });
                 },
                 error: () => {
@@ -90,8 +90,9 @@ export class ComentarioForm implements OnInit {
 
         const comentario: Comentario = this.formComentario.value;
         comentario.id = this.id ? Number(this.id) : undefined;
+        const avaliacaoId = Number(this.formComentario.get('avaliacaoId')?.value);
 
-        this.comentarioService.salvar(comentario).subscribe({
+        this.comentarioService.salvar(comentario, avaliacaoId).subscribe({
             next: () => {
                 this.router.navigate(['/comentarios']);
             },

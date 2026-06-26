@@ -32,10 +32,10 @@ export class JogoForm implements OnInit {
         private activatedRoute: ActivatedRoute
     ) {
         this.formJogo = this.fb.group({
-            titulo: ['', [Validators.required, Validators.minLength(2)]],
-            dataLancamento: ['', Validators.required],
-            idGenero: ['', Validators.required],
-            idDesenvolvedor: ['', Validators.required]
+            nmJogo: ['', [Validators.required, Validators.minLength(2)]],
+            dtLancamento: ['', Validators.required],
+            genero: ['', Validators.required],
+            devId: ['', Validators.required]
         });
     }
 
@@ -49,10 +49,10 @@ export class JogoForm implements OnInit {
             this.jogoService.buscarPorId(this.id).subscribe({
                 next: (jogo) => {
                     this.formJogo.patchValue({
-                        titulo: jogo.titulo,
-                        dataLancamento: jogo.dataLancamento,
-                        idGenero: jogo.idGenero,
-                        idDesenvolvedor: jogo.idDesenvolvedor
+                        nmJogo: jogo.nmJogo,
+                        dtLancamento: jogo.dtLancamento,
+                        genero: jogo.genero,
+                        devId: jogo.devId
                     });
                 },
                 error: () => {

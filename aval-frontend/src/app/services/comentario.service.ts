@@ -20,11 +20,11 @@ export class ComentarioService {
     return this.http.get<Comentario>(`${this.apiUrl}/${id}`);
   }
 
-  salvar(comentario: Comentario): Observable<Comentario> {
+  salvar(comentario: Comentario, idAvaliacao: number): Observable<Comentario> {
     if (comentario.id) {
       return this.http.put<Comentario>(`${this.apiUrl}/${comentario.id}`, comentario);
     }
-    return this.http.post<Comentario>(this.apiUrl, comentario);
+    return this.http.post<Comentario>(`${this.apiUrl}/avaliacao/${idAvaliacao}`, comentario);
   }
 
   excluir(id: string): Observable<void> {

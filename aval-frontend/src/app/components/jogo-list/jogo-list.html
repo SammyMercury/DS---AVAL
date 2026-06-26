@@ -29,9 +29,9 @@
         <tbody>
             @for (jogo of jogos; track jogo.id) {
             <tr>
-                <td>{{ jogo.titulo }}</td>
-                <td>{{ jogo.nomeGenero }}</td>
-                <td>{{ jogo.dataLancamento }}</td>
+                <td>{{ jogo.nome }}</td>
+                <td>{{ jogo.devId }}</td>
+                <td>{{ jogo.dtLancamento }}</td>
                 <td class="text-center">
                     <span class="badge bg-primary fs-6">{{ jogo.notaGeral ?? '—' }}</span>
                 </td>

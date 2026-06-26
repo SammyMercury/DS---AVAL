@@ -24,11 +24,11 @@ export class AvaliacaoService {
     return this.http.get<Avaliacao>(`${this.apiUrl}/${id}`);
   }
 
-  salvar(avaliacao: Avaliacao): Observable<Avaliacao> {
+  salvar(avaliacao: Avaliacao, idJogo: number): Observable<Avaliacao> {
     if (avaliacao.id) {
       return this.http.put<Avaliacao>(`${this.apiUrl}/${avaliacao.id}`, avaliacao);
     }
-    return this.http.post<Avaliacao>(this.apiUrl, avaliacao);
+    return this.http.post<Avaliacao>(`${this.apiUrl}/jogo/${idJogo}`, avaliacao);
   }
 
   excluir(id: string): Observable<void> {

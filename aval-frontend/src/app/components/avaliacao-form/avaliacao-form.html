@@ -14,7 +14,7 @@
             <select class="form-select" formControlName="idJogo">
                 <option value="">Selecione um jogo</option>
                 @for (jogo of jogos; track jogo.id) {
-                <option [value]="jogo.id">{{ jogo.titulo }}</option>
+                <option [value]="jogo.id">{{ jogo.nome }}</option>
                 }
             </select>
             @if (validarCampo('idJogo', 'required')) {
@@ -24,13 +24,13 @@
 
         <div class="col-md-6 mb-3">
             <label class="form-label">Pessoa</label>
-            <select class="form-select" formControlName="idPessoa">
+            <select class="form-select" formControlName="userId">
                 <option value="">Selecione uma pessoa</option>
                 @for (pessoa of pessoas; track pessoa.id) {
                     <option [value]="pessoa.id">{{ pessoa.nome }}</option>
                 }
             </select>
-            @if (validarCampo('idPessoa', 'required')) {
+            @if (validarCampo('userId', 'required')) {
                 <div class="text-danger small">A pessoa é obrigatória.</div>
             }
         </div>

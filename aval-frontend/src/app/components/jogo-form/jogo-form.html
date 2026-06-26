@@ -11,16 +11,16 @@
     <div class="row">
         <div class="col-md-8 mb-3">
             <label class="form-label">Título</label>
-            <input type="text" class="form-control" formControlName="titulo">
-            @if (validarCampo('titulo', 'required')) {
+            <input type="text" class="form-control" formControlName="nmJogo">
+            @if (validarCampo('nmJogo', 'required')) {
                 <div class="text-danger small">O título é obrigatório.</div>
             }
         </div>
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Data de Lançamento</label>
-            <input type="date" class="form-control" formControlName="dataLancamento">
-            @if (validarCampo('dataLancamento', 'required')) {
+            <input type="date" class="form-control" formControlName="dtLancamento">
+            @if (validarCampo('dtLancamento', 'required')) {
                 <div class="text-danger small">A data é obrigatória.</div>
             }
         </div>
@@ -29,26 +29,26 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <label class="form-label">Gênero</label>
-            <select class="form-select" formControlName="idGenero">
+            <select class="form-select" formControlName="genero">
                 <option value="">Selecione um gênero</option>
                 @for (genero of generos; track genero.id) {
                     <option [value]="genero.id">{{ genero.descricao }}</option>
                 }
             </select>
-            @if (validarCampo('idGenero', 'required')) {
+            @if (validarCampo('genero', 'required')) {
                 <div class="text-danger small">O gênero é obrigatório.</div>
             }
         </div>
 
         <div class="col-md-6 mb-3">
             <label class="form-label">Desenvolvedor</label>
-            <select class="form-select" formControlName="idDesenvolvedor">
+            <select class="form-select" formControlName="devId">
                 <option value="">Selecione um desenvolvedor</option>
                 @for (dev of desenvolvedores; track dev.id) {
                     <option [value]="dev.id">{{ dev.nome }}</option>
                 }
             </select>
-            @if (validarCampo('idDesenvolvedor', 'required')) {
+            @if (validarCampo('devId', 'required')) {
                 <div class="text-danger small">O desenvolvedor é obrigatório.</div>
             }
         </div>

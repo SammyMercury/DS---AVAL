@@ -34,7 +34,7 @@ export class AvaliacaoForm implements OnInit {
         this.formAvaliacao = this.fb.group({
             nota: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
             idJogo: ['', Validators.required],
-            idPessoa: ['', Validators.required]
+            userId: ['', Validators.required]
         });
     }
 
@@ -49,8 +49,7 @@ export class AvaliacaoForm implements OnInit {
                 next: (avaliacao: Avaliacao) => {
                     this.formAvaliacao.patchValue({
                         nota: avaliacao.nota,
-                        idJogo: avaliacao.idJogo,
-                        idPessoa: avaliacao.idPessoa
+                        userId: avaliacao.userId
                     });
                 },
                 error: () => {
@@ -89,8 +88,9 @@ export class AvaliacaoForm implements OnInit {
 
         const avaliacao: Avaliacao = this.formAvaliacao.value;
         avaliacao.id = this.id ? Number(this.id) : undefined;
+        const idJogo = Number(this.formAvaliacao.get('idJogo')?.value);
 
-        this.avaliacaoService.salvar(avaliacao).subscribe({
+        this.avaliacaoService.salvar(avaliacao, idJogo).subscribe({
             next: () => {
                 this.router.navigate(['/avaliacoes']);
             },

@@ -7,7 +7,7 @@ import { Desenvolvedor } from '../models/desenvolvedor';
   providedIn: 'root' 
 })
 export class DesenvolvedorService {
-  private readonly apiUrl = 'http://localhost:8080/desenvolvedores';
+  private readonly apiUrl = 'http://localhost:8080/desenvolvedoras';
   constructor(private http: HttpClient) { }
 
   listar(): Observable<Desenvolvedor[]> {
