@@ -1,6 +1,6 @@
 package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,10 +22,10 @@ public class Jogo {
     private Long id;
 
     @Column(nullable = false)
-    private String nm_jogo;
+    private String nmJogo;
 
     @Column(nullable = false)
-    private Date dt_lancamento;
+    private LocalDateTime dtLancamento;
 
     @Column(nullable = false)
     private Double notaGeral;
@@ -42,10 +42,10 @@ public class Jogo {
     public Jogo(){}
 
 
-    public Jogo(Long id, String nm_jogo, Date dt_lancamento, Double notaGeral, Dev dev, Genero genero){
+    public Jogo(Long id, String nmJogo, LocalDateTime dtLancamento, Double notaGeral, Dev dev, Genero genero){
         this.id = id;
-        this.nm_jogo = nm_jogo;
-        this.dt_lancamento = dt_lancamento;
+        this.nmJogo = nmJogo;
+        this.dtLancamento = dtLancamento;
         this.notaGeral = notaGeral;
         this.dev = dev;
         this.genero = genero;
@@ -61,8 +61,8 @@ public class Jogo {
     }
 
     
-    public Date getDt_lancamento() {
-        return dt_lancamento;
+    public LocalDateTime getDtLancamento() {
+        return dtLancamento;
     }
     
     public Genero getGenero() {
@@ -73,8 +73,8 @@ public class Jogo {
         return id;
     }
     
-    public String getNm_jogo() {
-        return nm_jogo;
+    public String getNmJogo() {
+        return nmJogo;
     }
     
     public Double getNotaGeral() {
@@ -85,16 +85,16 @@ public class Jogo {
         this.id = id;
     }
 
-    public void setNm_jogo(String nm_jogo) {
-        this.nm_jogo = nm_jogo;
+    public void setNmJogo(String nmJogo) {
+        this.nmJogo = nmJogo;
     }
 
     public void setNotaGeral(Double notaGeral) {
         this.notaGeral = notaGeral;
     }
     
-    public void setDt_lancamento(Date dt_lancamento) {
-        this.dt_lancamento = dt_lancamento;
+    public void setDtLancamento(LocalDateTime dtLancamento) {
+        this.dtLancamento = dtLancamento;
     }
     
     public void setGenero(Genero genero) {

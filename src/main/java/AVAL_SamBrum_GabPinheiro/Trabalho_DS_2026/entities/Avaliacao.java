@@ -30,16 +30,28 @@ public class Avaliacao {
     @JoinColumn(nullable= false)
     private Pessoa user;
 
+    @ManyToOne
+    @JoinColumn(nullable= false)
+    private Jogo jogo;
+
+
+
     public Avaliacao(){}
 
 
-    public Avaliacao(Long id, Double nota, Estado estado, Pessoa user){
+    public Avaliacao(Long id, Double nota, Estado estado, Pessoa user, Jogo jogo){
         this.id = id;
         this.nota = nota;
         this.estado = estado;
         this.user = user;
+        this.jogo = jogo;
 
     }
+
+    public Jogo getJogo() {
+        return jogo;
+    }
+
 
     public Estado getEstado() {
         return estado;
@@ -71,6 +83,10 @@ public class Avaliacao {
 
     public void setUser(Pessoa user) {
         this.user = user;
+    }
+
+    public void setJogo(Jogo jogo) {
+        this.jogo = jogo;
     }
 
     

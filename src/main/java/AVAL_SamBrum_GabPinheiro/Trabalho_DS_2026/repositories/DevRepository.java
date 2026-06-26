@@ -8,4 +8,7 @@ import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Dev;
 @Repository
 public interface  DevRepository extends JpaRepository<Dev, Long>{
     
+    boolean existsByNome(String nome);
+    Dev findByNome(String nome);
+
 }

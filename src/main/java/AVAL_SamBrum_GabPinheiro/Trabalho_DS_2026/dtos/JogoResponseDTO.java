@@ -16,7 +16,7 @@ public class JogoResponseDTO {
 
     public JogoResponseDTO(Jogo entity){
         this.id = entity.getId();
-        this.nome = entity.getNm_jogo();
+        this.nome = entity.getNmJogo();
         this.devId = entity.getDev().getId();
     }
 

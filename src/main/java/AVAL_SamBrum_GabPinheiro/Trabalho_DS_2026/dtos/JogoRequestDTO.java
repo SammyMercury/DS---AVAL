@@ -1,6 +1,7 @@
 package AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Genero;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +13,7 @@ public class JogoRequestDTO {
     private String nmJogo;
     
     @NotNull(message = "O campo 'dt_lancamento' é obrigatório.")
-    private Date dtLancamento;
+    private LocalDateTime dtLancamento;
     
     @NotNull(message = "O campo 'notaGeral' é obrigatório.")
     private Double notaGeral;
@@ -30,7 +31,7 @@ public class JogoRequestDTO {
         return devId;
     }
 
-    public Date getDtLancamento() {
+    public LocalDateTime getDtLancamento() {
         return dtLancamento;
     }
 
@@ -50,8 +51,7 @@ public class JogoRequestDTO {
         this.devId = devId;
     }
 
-    
-    public void setDtLancamento(Date dtLancamento) {
+    public void setDtLancamento(LocalDateTime dtLancamento) {
         this.dtLancamento = dtLancamento;
     }
 

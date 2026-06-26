@@ -17,4 +17,10 @@ public interface  PessoaRepository extends JpaRepository<Pessoa, Long> {
     // .findById() -> Busca por ID
     // .deleteById() -> Apaga do banco
 
+    boolean existsByCpf(String cpf);
+    boolean existsByEmail(String email);
+
+    Pessoa findByCpf(String cpf);
+    Pessoa findByEmail(String email);
+
 }
