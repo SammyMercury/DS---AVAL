@@ -52,10 +52,7 @@ public class ComentarioService {
         Avaliacao avaliacaoAlvo = avaliacaoRepository.findById(idAvaliacao)
                 .orElseThrow(() -> new ResourceNotFoundException("Avaliação não encontrada. ID: " + idAvaliacao));
 
-        // Regra: Precisa ser USUARIO comum para interagir
-        if (!"USUARIO".equals(autorDoComentario.getAtor().name())) {
-            throw new BusinessException("Apenas contas de usuários comuns podem realizar comentários.");
-        }
+        
 
         Comentario comentario = new Comentario();
         comentario.setUser(autorDoComentario);

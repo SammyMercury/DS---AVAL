@@ -51,10 +51,7 @@ public class AvaliacaoService {
         Pessoa pessoa = pessoaRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + dto.getUserId()));
 
-        // Regra de negócio: Apenas contas do tipo USUARIO comum avaliam (Monitores gerenciam o catálogo)
-        if (!"USUARIO".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas usuários comuns podem avaliar jogos.");
-        }
+       
 
         // Regra de negócio: Um usuário não pode avaliar o mesmo jogo duas vezes
         if (avaliacaoRepository.existsByJogoAndUser(jogo, pessoa)) {
