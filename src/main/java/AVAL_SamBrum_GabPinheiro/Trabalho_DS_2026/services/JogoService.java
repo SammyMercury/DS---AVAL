@@ -11,13 +11,11 @@ import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.JogoRequestDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.JogoResponseDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Dev;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Jogo;
-import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Pessoa;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.exceptions.BusinessException;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.exceptions.DatabaseException;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.exceptions.ResourceNotFoundException;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.repositories.DevRepository;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.repositories.JogoRepository;
-import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.repositories.PessoaRepository;
 
 @Service
 public class JogoService {
@@ -25,8 +23,6 @@ public class JogoService {
     @Autowired
     private JogoRepository jogoRepository;
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
     @Autowired
     private DevRepository devRepository;
 
@@ -44,28 +40,19 @@ public class JogoService {
     }
 
     @Transactional
-    public JogoResponseDTO insert(JogoRequestDTO dto, Long idPessoaAutenticada) {
-        // 1. Busca a pessoa que está tentando cadastrar o jogo
-        Pessoa pessoa = pessoaRepository.findById(idPessoaAutenticada)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idPessoaAutenticada));
-
-        if (!"MONITOR".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas usuários do tipo Moderação/Monitor podem gerenciar o catálogo de jogos.");
-        }
-
-        // 2. BUSCA A DEV PRIMEIRO (Para ter o objeto correto)
+    public JogoResponseDTO insert(JogoRequestDTO dto) {
+        // 1. BUSCA A DEV PRIMEIRO (Para ter o objeto correto)
         Dev dev = devRepository.findById(dto.getDevId())
                 .orElseThrow(() -> new ResourceNotFoundException("Dev não encontrado. Id: " + dto.getDevId()));
 
-        // 3. AGORA SIM: Passa o objeto 'dev' (e não o id isolado)
+        // 2. Impede duplicidade de cadastro
         if (jogoRepository.existsByNmJogoAndDevAndDtLancamento(dto.getNmJogo(), dev, dto.getDtLancamento())) {
             throw new BusinessException("Jogo já cadastrado.");
         }
 
-        // 4. Instancia e salva o jogo
+        // 3. Instancia e salva o jogo
         Jogo jogo = new Jogo();
 
-        // NOTA: Se os métodos na sua entidade forem em CamelCase, mude para setNmJogo e setDtLancamento
         jogo.setNmJogo(dto.getNmJogo());
         jogo.setGenero(dto.getGenero());
         jogo.setDev(dev);
@@ -75,50 +62,33 @@ public class JogoService {
     }
 
     @Transactional
-    public JogoResponseDTO update(Long idJogo, JogoRequestDTO dto, Long idPessoaAutenticada) {
-        // 1. Valida se a pessoa autenticada é um MONITOR
-        Pessoa pessoa = pessoaRepository.findById(idPessoaAutenticada)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idPessoaAutenticada));
-        
-        if (!"MONITOR".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas usuários do tipo Moderação/Monitor podem alterar jogos.");
-        }
-
-        // 2. LOCALIZA O JOGO NO BANCO PELO ID
-        // Se o ID não existir, a sua exceção customizada entra em ação e retorna HTTP 404
+    public JogoResponseDTO update(Long idJogo, JogoRequestDTO dto) {
+        // 1. LOCALIZA O JOGO NO BANCO PELO ID
         Jogo jogo = jogoRepository.findById(idJogo)
                 .orElseThrow(() -> new ResourceNotFoundException("Jogo não encontrado. ID: " + idJogo));
 
-        // 3. Valida a desenvolvedora caso ela também esteja mudando
+        // 2. Valida a desenvolvedora caso ela também esteja mudando
         Dev dev = devRepository.findById(dto.getDevId())
                 .orElseThrow(() -> new ResourceNotFoundException("Dev não encontrada. ID: " + dto.getDevId()));
 
-        // 4. Copia as novas informações do DTO para a entidade que localizamos
+        // 3. Copia as novas informações do DTO para a entidade que localizamos
         jogo.setNmJogo(dto.getNmJogo());
         jogo.setGenero(dto.getGenero());
         jogo.setDtLancamento(dto.getDtLancamento());
         jogo.setDev(dev);
 
-        // 6. Retorna a resposta mapeada em DTO
+        // 4. Retorna a resposta mapeada em DTO
         return new JogoResponseDTO(jogoRepository.save(jogo));
     }
 
     @Transactional
-    public void delete(Long idJogo, Long idPessoaAutenticada) {
-        // 1. Valida se a pessoa autenticada é um MONITOR
-        Pessoa pessoa = pessoaRepository.findById(idPessoaAutenticada)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idPessoaAutenticada));
-
-        if (!"MONITOR".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas usuários do tipo Moderação/Monitor podem excluir jogos do catálogo.");
-        }
-
-        // 2. Verifica se o jogo realmente existe antes de tentar deletar
+    public void delete(Long idJogo) {
+        // 1. Verifica se o jogo realmente existe antes de tentar deletar
         if (!jogoRepository.existsById(idJogo)) {
             throw new ResourceNotFoundException("Jogo não encontrado. ID: " + idJogo);
         }
 
-        // 3. Tenta deletar capturando erros de integridade do banco (ex: jogo com avaliações atreladas)
+        // 2. Tenta deletar capturando erros de integridade do banco (ex: jogo com avaliações atreladas)
         try {
             jogoRepository.deleteById(idJogo);
         } catch (DataIntegrityViolationException e) {

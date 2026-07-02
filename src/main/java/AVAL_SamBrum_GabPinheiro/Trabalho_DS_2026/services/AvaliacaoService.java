@@ -100,20 +100,9 @@ public class AvaliacaoService {
     }
 
     @Transactional
-    public void delete(Long idAvaliacao, Long idUsuarioAutenticado) {
+    public void delete(Long idAvaliacao) {
         Avaliacao avaliacao = avaliacaoRepository.findById(idAvaliacao)
                 .orElseThrow(() -> new ResourceNotFoundException("Avaliação não encontrada. ID: " + idAvaliacao));
-
-        // Segurança: Apenas o dono ou um MONITOR pode apagar uma avaliação
-        Pessoa pessoaLogada = pessoaRepository.findById(idUsuarioAutenticado)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idUsuarioAutenticado));
-
-        boolean isDono = idUsuarioAutenticado.equals(avaliacao.getUser().getId());
-        boolean isMonitor = "MONITOR".equals(pessoaLogada.getAtor().name());
-
-        if (!isDono && !isMonitor) {
-            throw new BusinessException("Sem permissão para remover esta avaliação.");
-        }
 
         Jogo jogoOriginal = avaliacao.getJogo();
 

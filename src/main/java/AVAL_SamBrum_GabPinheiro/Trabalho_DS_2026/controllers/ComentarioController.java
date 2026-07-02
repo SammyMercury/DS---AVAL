@@ -60,12 +60,9 @@ public class ComentarioController {
     }
 
     @DeleteMapping("/{idComentario}")
-    @Operation(summary = "Excluir um comentário (Apenas o autor ou MONITOR)")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long idComentario,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário tentando remover o comentário") Long idAutor) {
-        
-        comentarioService.delete(idComentario, idAutor);
+    @Operation(summary = "Excluir um comentário")
+    public ResponseEntity<Void> delete(@PathVariable Long idComentario) {
+        comentarioService.delete(idComentario);
         return ResponseEntity.noContent().build();
     }
 

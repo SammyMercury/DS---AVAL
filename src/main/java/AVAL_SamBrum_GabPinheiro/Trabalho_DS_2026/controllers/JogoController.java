@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,6 @@ import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.JogoRequestDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.JogoResponseDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.services.JogoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -47,33 +45,23 @@ public class JogoController {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastrar um novo jogo (Requer privilégios de MONITOR)")
-    public ResponseEntity<JogoResponseDTO> insert(
-            @Valid @RequestBody JogoRequestDTO dto,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário MONITOR realizando a ação") Long idPessoaAutenticada) {
-        
-        JogoResponseDTO newDto = jogoService.insert(dto, idPessoaAutenticada);
+    @Operation(summary = "Cadastrar um novo jogo")
+    public ResponseEntity<JogoResponseDTO> insert(@Valid @RequestBody JogoRequestDTO dto) {
+        JogoResponseDTO newDto = jogoService.insert(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(newDto);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar dados de um jogo (Requer privilégios de MONITOR)")
-    public ResponseEntity<JogoResponseDTO> update(
-            @PathVariable Long id, 
-            @Valid @RequestBody JogoRequestDTO dto,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário MONITOR realizando a ação") Long idPessoaAutenticada) {
-        
-        JogoResponseDTO updatedDto = jogoService.update(id, dto, idPessoaAutenticada);
+    @Operation(summary = "Atualizar dados de um jogo")
+    public ResponseEntity<JogoResponseDTO> update(@PathVariable Long id, @Valid @RequestBody JogoRequestDTO dto) {
+        JogoResponseDTO updatedDto = jogoService.update(id, dto);
         return ResponseEntity.ok(updatedDto);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Excluir um jogo do catálogo (Requer privilégios de MONITOR)")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long id,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário MONITOR realizando a ação") Long idPessoaAutenticada) {
-        
-        jogoService.delete(id, idPessoaAutenticada);
+    @Operation(summary = "Excluir um jogo do catálogo")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        jogoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

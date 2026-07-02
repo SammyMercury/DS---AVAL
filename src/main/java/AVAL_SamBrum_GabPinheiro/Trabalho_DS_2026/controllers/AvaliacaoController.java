@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,6 @@ import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.AvaliacaoRequestDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.AvaliacaoResponseDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.services.AvaliacaoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -66,12 +64,9 @@ public class AvaliacaoController {
     }
 
     @DeleteMapping("/{idAvaliacao}")
-    @Operation(summary = "Excluir uma avaliação do sistema (Apenas o dono ou um MONITOR)")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long idAvaliacao,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário tentando remover a avaliação") Long idUsuarioAutenticado) {
-        
-        avaliacaoService.delete(idAvaliacao, idUsuarioAutenticado);
+    @Operation(summary = "Excluir uma avaliação do sistema")
+    public ResponseEntity<Void> delete(@PathVariable Long idAvaliacao) {
+        avaliacaoService.delete(idAvaliacao);
         return ResponseEntity.noContent().build();
     }
 }

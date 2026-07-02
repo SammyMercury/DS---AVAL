@@ -8,21 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Dev;
-import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Pessoa;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.exceptions.BusinessException;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.exceptions.DatabaseException;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.exceptions.ResourceNotFoundException;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.repositories.DevRepository;
-import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.repositories.PessoaRepository;
 
 @Service
 public class DevService {
 
     @Autowired
     private DevRepository devRepository;
-
-    @Autowired
-    private PessoaRepository pessoaRepository;
 
     @Transactional(readOnly = true)
     public List<Dev> listar() {
@@ -38,16 +33,8 @@ public class DevService {
     }
 
     @Transactional
-    public Dev insert(Dev dto, Long idPessoaAutenticada) {
-        // 1. Valida se quem está cadastrando é um MONITOR
-        Pessoa pessoa = pessoaRepository.findById(idPessoaAutenticada)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idPessoaAutenticada));
-
-        if (!"MONITOR".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas moderadores podem gerenciar as desenvolvedoras.");
-        }
-
-        // 2. Impede nomes duplicados no banco
+    public Dev insert(Dev dto) {
+        // Impede nomes duplicados no banco
         if (devRepository.existsByNome(dto.getNome())) {
             throw new BusinessException("Já existe uma desenvolvedora cadastrada com este nome.");
         }
@@ -59,20 +46,12 @@ public class DevService {
     }
 
     @Transactional
-    public Dev update(Long id, Dev dto, Long idPessoaAutenticada) {
-        // 1. Valida moderador
-        Pessoa pessoa = pessoaRepository.findById(idPessoaAutenticada)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idPessoaAutenticada));
-
-        if (!"MONITOR".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas moderadores podem alterar dados de desenvolvedoras.");
-        }
-
-        // 2. Busca a antiga
+    public Dev update(Long id, Dev dto) {
+        // 1. Busca a antiga
         Dev dev = devRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Desenvolvedora não encontrada. ID: " + id));
 
-        // 3. Valida se o novo nome já pertence a OUTRA desenvolvedora
+        // 2. Valida se o novo nome já pertence a OUTRA desenvolvedora
         Dev confereNome = devRepository.findByNome(dto.getNome());
         if (confereNome != null && !confereNome.getId().equals(dev.getId())) {
             throw new BusinessException("Este nome de desenvolvedora já está em uso.");
@@ -84,15 +63,7 @@ public class DevService {
     }
 
     @Transactional
-    public void delete(Long id, Long idPessoaAutenticada) {
-        // 1. Valida moderador
-        Pessoa pessoa = pessoaRepository.findById(idPessoaAutenticada)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idPessoaAutenticada));
-
-        if (!"MONITOR".equals(pessoa.getAtor().name())) {
-            throw new BusinessException("Apenas moderadores podem excluir desenvolvedoras.");
-        }
-
+    public void delete(Long id) {
         if (!devRepository.existsById(id)) {
             throw new ResourceNotFoundException("Desenvolvedora não encontrada. ID: " + id);
         }

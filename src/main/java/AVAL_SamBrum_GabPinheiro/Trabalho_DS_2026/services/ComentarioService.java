@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.ComentarioRequestDTO;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.dtos.ComentarioResponseDTO;
-import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Ator;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Avaliacao;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Comentario;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Pessoa;
@@ -84,18 +83,9 @@ public class ComentarioService {
     }
 
     @Transactional
-    public void delete(Long idComentario, Long idAutor) {
-        Pessoa pessoa = pessoaRepository.findById(idAutor)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado. ID: " + idAutor));
-
-        Comentario comentario = comentarioRepository.findById(idComentario)
-                .orElseThrow(() -> new ResourceNotFoundException("Comentario não encontrado. ID: " + idComentario));
-
-        boolean isAutor = idAutor.equals(comentario.getUser().getId());
-        boolean isMonitor = pessoa.getAtor() == Ator.MONITOR;
-
-        if (!isAutor && !isMonitor) {
-            throw new BusinessException("Apenas o autor do comentário e moderadores podem removê-lo.");
+    public void delete(Long idComentario) {
+        if (!comentarioRepository.existsById(idComentario)) {
+            throw new ResourceNotFoundException("Comentario não encontrado. ID: " + idComentario);
         }
 
         try {

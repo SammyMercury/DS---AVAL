@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.entities.Dev;
 import AVAL_SamBrum_GabPinheiro.Trabalho_DS_2026.services.DevService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -45,33 +43,23 @@ public class DevController {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastrar uma nova desenvolvedora (Requer privilégios de MONITOR)")
-    public ResponseEntity<Dev> insert(
-            @Valid @RequestBody Dev dto,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário MONITOR realizando a ação") Long idPessoaAutenticada) {
-        
-        Dev newDev = devService.insert(dto, idPessoaAutenticada);
+    @Operation(summary = "Cadastrar uma nova desenvolvedora")
+    public ResponseEntity<Dev> insert(@Valid @RequestBody Dev dto) {
+        Dev newDev = devService.insert(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(newDev);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar dados de uma desenvolvedora (Requer privilégios de MONITOR)")
-    public ResponseEntity<Dev> update(
-            @PathVariable Long id,
-            @Valid @RequestBody Dev dto,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário MONITOR realizando a ação") Long idPessoaAutenticada) {
-        
-        Dev updatedDev = devService.update(id, dto, idPessoaAutenticada);
+    @Operation(summary = "Atualizar dados de uma desenvolvedora")
+    public ResponseEntity<Dev> update(@PathVariable Long id, @Valid @RequestBody Dev dto) {
+        Dev updatedDev = devService.update(id, dto);
         return ResponseEntity.ok(updatedDev);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Excluir uma desenvolvedora do catálogo (Requer privilégios de MONITOR)")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long id,
-            @RequestHeader("X-User-Id") @Parameter(description = "ID do usuário MONITOR realizando a ação") Long idPessoaAutenticada) {
-        
-        devService.delete(id, idPessoaAutenticada);
+    @Operation(summary = "Excluir uma desenvolvedora do catálogo")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        devService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
